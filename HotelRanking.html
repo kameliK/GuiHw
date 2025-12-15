@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Booking Usability & Redesign</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* General Styles */
+:root {
+    --primary: #00457c;
+    --primary-dark: #00325a;
+    --secondary: #ffcc00;
+    --secondary-dark: #e6b800;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --gray-light: #e9ecef;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+    --radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.container {
+    padding: 1.5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 12px rgba(0, 69, 124, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+header h1 {
+    font-size: 2.2rem;
+    position: relative;
+    display: inline-block;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 60%;
+    height: 3px;
+    background: var(--secondary);
+    border-radius: 2px;
+    transform: scaleX(0);
+    animation: expandWidth 1s ease-out 0.5s forwards;
+}
+
+/* Section Headings */
+section {
+    margin-bottom: 2.5rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+section h2 {
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+section h2::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 30px;
+    background: var(--secondary);
+    border-radius: 4px;
+}
+
+section h3 {
+    color: var(--primary-dark);
+    margin: 1.5rem 0 1rem 0;
+    font-size: 1.4rem;
+    position: relative;
+    padding-left: 15px;
+}
+
+section h3::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+/* Heuristics Comparison Table */
+.heuristics-table-container {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    margin: 2rem 0;
+    overflow-x: auto;
+    animation: slideUp 0.8s ease-out;
+}
+
+.heuristics-table {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.heuristics-table th {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 1.2rem;
+    text-align: center;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.heuristics-table th:first-child {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #002a4d 100%);
+    text-align: left;
+    width: 250px;
+}
+
+.heuristics-table td {
+    padding: 1.2rem;
+    border-bottom: 1px solid var(--gray-light);
+    background: white;
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+}
+
+.heuristics-table td:first-child {
+    font-weight: 500;
+    text-align: left;
+    background: #f8f9fa;
+}
+
+.heuristics-table tr:hover td:first-child {
+    background: #e9ecef;
+}
+
+.heuristics-table tr:hover td:not(:first-child) {
+    background: #f8f9fa;
+}
+
+/* Checkmark Styles */
+.checkmark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.checkmark.yes {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: var(--success);
+    border: 2px solid var(--success);
+}
+
+.checkmark.no {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: var(--danger);
+    border: 2px solid var(--danger);
+}
+
+.checkmark.partial {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: var(--warning);
+    border: 2px solid var(--warning);
+}
+
+/* Score Badges */
+.score-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.score-excellent {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+}
+
+.score-good {
+    background: linear-gradient(135deg, #17a2b8, #20c997);
+    color: white;
+}
+
+.score-moderate {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    color: white;
+}
+
+.score-poor {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    color: white;
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.summary-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-top: 4px solid var(--primary);
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.summary-card.citizenm {
+    border-top-color: var(--success);
+}
+
+.summary-card.holidayinn {
+    border-top-color: #17a2b8;
+}
+
+.summary-card.ibis {
+    border-top-color: var(--warning);
+}
+
+.summary-card.bestwestern {
+    border-top-color: var(--danger);
+}
+
+.summary-card h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.summary-card h4 i {
+    font-size: 1.2rem;
+}
+
+/* Redesign Section */
+.redesign {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.8s ease-out;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.redesign::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--secondary), var(--primary));
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    animation: slideUp 0.6s ease-out 0.2s both;
+}
+
+.search-box input, .search-box button, .filters select {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--gray-light);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: var(--transition);
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 69, 124, 0.1);
+}
+
+.search-box button {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+    color: var(--dark);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.search-box button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.search-box button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.search-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 204, 0, 0.3);
+}
+
+/* Spinner */
+.spinner {
+    display: none;
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(0, 69, 124, 0.1);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite, pulse 2s infinite;
+    margin: 2rem auto;
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+    animation: slideUp 0.6s ease-out 0.4s both;
+}
+
+.filters label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    background: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.filters label:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.filters select {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--gray-light);
+    background: white;
+    font-family: 'Inter', sans-serif;
+    transition: var(--transition);
+}
+
+.filters select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 69, 124, 0.1);
+}
+
+/* Results Grid */
+.results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Hotel Cards */
+.card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    animation: slideUp 0.6s ease-out;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    transform: scaleX(0);
+    transition: transform 0.4s ease-out;
+}
+
+.card:hover::after {
+    transform: scaleX(1);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 1.2rem 1.5rem;
+}
+
+.card-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: var(--primary);
+}
+
+.card-content p {
+    margin: 0.5rem 0;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-content i {
+    color: var(--primary);
+    width: 20px;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.15);
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.viewRoomBtn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.viewRoomBtn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 69, 124, 0.2);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    animation: slideUp 0.4s ease-out;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--gray);
+    transition: var(--transition);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.modal-close:hover {
+    color: var(--primary);
+    background: var(--gray-light);
+    transform: rotate(90deg);
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    text-align: center;
+    padding: 2.5rem 1rem;
+    margin-top: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.footer-content {
+    position: relative;
+    z-index: 1;
+}
+
+footer p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.footer-signature {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    display: inline-block;
+    transition: var(--transition);
+}
+
+.footer-signature:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.footer-links a {
+    color: white;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--secondary);
+    transform: translateY(-3px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes expandWidth {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 69, 124, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(0, 69, 124, 0); }
+}
+
+@keyframes checkmarkPop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    background: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    header { padding: 1.2rem 1rem; }
+    header h1 { font-size: 1.8rem; }
+    section h2 { font-size: 1.5rem; }
+    .search-box { flex-direction: column; }
+    .filters { flex-direction: column; align-items: flex-start; }
+    .filters label { width: 100%; }
+    .results { grid-template-columns: 1fr; }
+    .summary-cards { grid-template-columns: 1fr; }
+    .legend { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 480px) {
+    .card-content { padding: 1rem; }
+    .modal-content { padding: 1.5rem; }
+    .footer-links { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Hotel Booking Usability & Redesign</h1>
+</header>
+
+<div class="container">
+
+<!-- Scenario Section -->
+<section>
+    <h2><i class="fas fa-map-marked-alt"></i> 1️⃣ Scenario</h2>
+    <p>You want to book a hotel for a 3-night stay in London for 2 adults, with easy access to transportation and breakfast included. You also want to quickly compare prices and view rooms with photos using a desktop browser.</p>
+</section>
+
+<!-- Nielsen Heuristics Comparison Table -->
+<section>
+    <h2><i class="fas fa-table"></i> 2️⃣ Nielsen's 10 Heuristics Comparison</h2>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #28a745;"></div>
+            <span>✓ Yes (Follows heuristic)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #ffc107;"></div>
+            <span>⚠️ Partial (Partially follows)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #dc3545;"></div>
+            <span>✗ No (Violates heuristic)</span>
+        </div>
+    </div>
+
+    <div class="heuristics-table-container">
+        <table class="heuristics-table">
+            <thead>
+                <tr>
+                    <th>Nielsen's 10 Heuristics</th>
+                    <th>Citizen M</th>
+                    <th>Holiday Inn</th>
+                    <th>Ibis</th>
+                    <th>Best Western</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>1. Visibility of System Status</strong><br>
+                        <small>Keep users informed about what is going on</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark partial">⚠️</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>2. Match Between System & Real World</strong><br>
+                        <small>Use familiar concepts, language, and conventions</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark partial">⚠️</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>3. User Control & Freedom</strong><br>
+                        <small>Provide emergency exits and undo options</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark partial">⚠️</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>4. Consistency & Standards</strong><br>
+                        <small>Follow platform and industry conventions</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark partial">⚠️</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>5. Error Prevention</strong><br>
+                        <small>Prevent problems from occurring</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark partial">⚠️</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>6. Recognition Rather Than Recall</strong><br>
+                        <small>Make objects, actions, and options visible</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark partial">⚠️</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>7. Flexibility & Efficiency of Use</strong><br>
+                        <small>Accelerate frequent users</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>8. Aesthetic & Minimalist Design</strong><br>
+                        <small>Dialogs should contain only relevant information</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark partial">⚠️</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>9. Help Users Recognize, Diagnose, & Recover from Errors</strong><br>
+                        <small>Error messages should be clear and suggest solutions</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark partial">⚠️</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>10. Help & Documentation</strong><br>
+                        <small>Provide help that is easy to find and focused on user tasks</small>
+                    </td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark yes">✓</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                    <td><span class="checkmark no">✗</span></td>
+                </tr>
+                <tr style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
+                    <td><strong>Overall Score</strong></td>
+                    <td>
+                        <div class="score-badge score-excellent">10/10 ✓</div>
+                    </td>
+                    <td>
+                        <div class="score-badge score-good">6/10 ⚠️</div>
+                    </td>
+                    <td>
+                        <div class="score-badge score-moderate">2/10 ✗</div>
+                    </td>
+                    <td>
+                        <div class="score-badge score-poor">0/10 ✗</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <div class="summary-card citizenm">
+            <h4><i class="fas fa-check-circle" style="color: #28a745;"></i> Citizen M</h4>
+            <p><strong>Excellent Usability:</strong> Follows all 10 heuristics with clear system status, error prevention, and minimalist design. Best choice for users.</p>
+        </div>
+        <div class="summary-card holidayinn">
+            <h4><i class="fas fa-exclamation-triangle" style="color: #17a2b8;"></i> Holiday Inn</h4>
+            <p><strong>Moderate Usability:</strong> Follows 6 heuristics partially. Some clutter and moderate feedback but generally usable.</p>
+        </div>
+        <div class="summary-card ibis">
+            <h4><i class="fas fa-times-circle" style="color: #ffc107;"></i> Ibis</h4>
+            <p><strong>Poor Usability:</strong> Only 2 heuristics followed. Multiple violations including poor feedback and inconsistent design.</p>
+        </div>
+        <div class="summary-card bestwestern">
+            <h4><i class="fas fa-times-circle" style="color: #dc3545;"></i> Best Western</h4>
+            <p><strong>Very Poor Usability:</strong> Violates all 10 heuristics. Selected for redesign due to severe usability issues.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 3️⃣ Best Western Redesign Implementation -->
+<section class="redesign">
+    <h2><i class="fas fa-paint-brush"></i> 3️⃣ Best Western Redesign Implementation</h2>
+    <p>The redesigned interface improves usability by addressing all 10 Nielsen heuristics that were violated in the original design:</p>
+
+    <!-- Search Box -->
+    <div class="search-box">
+        <input type="text" id="city" placeholder="🌍 City" value="London">
+        <input type="date" id="checkin" value="2025-06-15">
+        <input type="date" id="checkout" value="2025-06-18">
+        <input type="number" id="guests" min="1" value="2" placeholder="👥 Guests">
+        <button id="searchBtn"><i class="fas fa-search"></i> Search Hotels</button>
+    </div>
+
+    <!-- Spinner -->
+    <div class="spinner" id="spinner"></div>
+
+    <!-- Filter & Sort Options -->
+    <div class="filters">
+        <label>
+            <i class="fas fa-coffee"></i> Breakfast:
+            <select id="breakfastFilter">
+                <option value="all">All</option>
+                <option value="Included">Included</option>
+                <option value="Not included">Not included</option>
+            </select>
+        </label>
+        <label>
+            <i class="fas fa-sort-amount-down"></i> Sort By:
+            <select id="sortBy">
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="distance">Distance</option>
+            </select>
+        </label>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="results"></div>
+
+    <!-- Room Modal -->
+    <div class="modal" id="roomModal">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h2 id="modalHotelName">Hotel Name</h2>
+            <p>Room details, amenities, breakfast, and distance info go here.</p>
+            <button class="viewRoomBtn"><i class="fas fa-calendar-check"></i> Book Now</button>
+        </div>
+    </div>
+
+    <!-- How This Addresses Nielsen's Heuristics -->
+    <h3>How This Redesign Addresses Nielsen's Heuristics</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>1. System Status:</strong> Loading spinner and hover effects keep users informed.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>2. Real World Match:</strong> Clear icons and familiar interface elements.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>3. User Control:</strong> Easy filters, undo favorites, clear navigation.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>4. Consistency:</strong> Uniform buttons, colors, and layout throughout.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>5. Error Prevention:</strong> Date validation prevents invalid searches.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>6. Recognition:</strong> All info visible upfront, no hidden details.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>7. Efficiency:</strong> Filters and sorting for power users.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>8. Minimalist Design:</strong> Clean layout with only essential info.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>9. Error Recovery:</strong> Clear error messages with guidance.
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+            <strong>10. Help:</strong> Tooltips and intuitive interface reduce need for help.
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2025 Hotel Booking Usability Analysis & Redesign</p>
+        <div class="footer-signature">
+            Made  by Kamel Qandalaft
+        </div>
+        <div class="footer-signature">
+            Supervised by Dr.mai alfaouri
+        </div>
+</footer>
+
+<script>
+// Hotel Data
+let hotels = [
+    {name: "London Central Hotel", price: 120, breakfast: "Included", distance: 0.5, img: "https://picsum.photos/300/180?random=1"},
+    {name: "City Inn London", price: 95, breakfast: "Not included", distance: 1, img: "https://picsum.photos/300/180?random=2"},
+    {name: "The Royal Stay", price: 150, breakfast: "Included", distance: 0.8, img: "https://picsum.photos/300/180?random=3"},
+    {name: "West End Comfort", price: 110, breakfast: "Included", distance: 0.6, img: "https://picsum.photos/300/180?random=4"},
+    {name: "River View Suites", price: 135, breakfast: "Included", distance: 1.2, img: "https://picsum.photos/300/180?random=5"},
+    {name: "Metropolitan Inn", price: 85, breakfast: "Not included", distance: 1.5, img: "https://picsum.photos/300/180?random=6"},
+];
+
+// Elements
+const results = document.getElementById('results');
+const spinner = document.getElementById('spinner');
+const modal = document.getElementById('roomModal');
+const modalHotelName = document.getElementById('modalHotelName');
+
+const breakfastFilter = document.getElementById('breakfastFilter');
+const sortBy = document.getElementById('sortBy');
+
+let favorites = [];
+
+// Set default dates
+const today = new Date();
+const tomorrow = new Date(today);
+tomorrow.setDate(tomorrow.getDate() + 1);
+const nextWeek = new Date(today);
+nextWeek.setDate(nextWeek.getDate() + 4);
+
+document.getElementById('checkin').value = today.toISOString().split('T')[0];
+document.getElementById('checkout').value = tomorrow.toISOString().split('T')[0];
+
+// Render Hotels
+function renderHotels() {
+    results.innerHTML = '';
+    let filtered = hotels.filter(h => breakfastFilter.value === 'all' || h.breakfast === breakfastFilter.value);
+
+    if (sortBy.value === 'priceAsc') filtered.sort((a,b) => a.price-b.price);
+    else if (sortBy.value === 'priceDesc') filtered.sort((a,b) => b.price-a.price);
+    else if (sortBy.value === 'distance') filtered.sort((a,b) => a.distance-b.distance);
+
+    filtered.forEach((hotel, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.innerHTML = `
+            <img src="${hotel.img}" alt="${hotel.name}">
+            <button class="favorite-btn">${favorites.includes(hotel.name) ? "★" : "☆"}</button>
+            <div class="card-content">
+                <h3>${hotel.name}</h3>
+                <p><i class="fas fa-dollar-sign"></i> Price: $${hotel.price} / night</p>
+                <p><i class="fas fa-coffee"></i> Breakfast: ${hotel.breakfast}</p>
+                <p><i class="fas fa-location-arrow"></i> Distance: ${hotel.distance} km from center</p>
+                <button class="viewRoomBtn"><i class="fas fa-eye"></i> View Rooms</button>
+            </div>`;
+        results.appendChild(card);
+
+        // Favorite button
+        const favBtn = card.querySelector('.favorite-btn');
+        favBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            if(favorites.includes(hotel.name)) {
+                favorites = favorites.filter(f=>f!==hotel.name);
+                favBtn.innerHTML = "☆";
+                // Animation feedback
+                favBtn.style.animation = "none";
+                setTimeout(() => {
+                    favBtn.style.animation = "fadeIn 0.5s";
+                }, 10);
+            } else {
+                favorites.push(hotel.name);
+                favBtn.innerHTML = "★";
+                // Animation feedback
+                favBtn.style.transform = "scale(1.3)";
+                setTimeout(() => {
+                    favBtn.style.transform = "scale(1)";
+                }, 300);
+            }
+        });
+
+        // Modal open
+        card.querySelector('.viewRoomBtn').addEventListener('click', ()=> {
+            modal.style.display = 'flex';
+            modalHotelName.textContent = hotel.name;
+            // Add animation to modal
+            modal.querySelector('.modal-content').style.animation = "slideUp 0.4s ease-out";
+        });
+    });
+}
+
+// Close Modal
+document.getElementById('closeModal').onclick = () => {
+    modal.style.animation = "fadeIn 0.3s reverse";
+    setTimeout(() => {
+        modal.style.display = 'none';
+        modal.style.animation = "fadeIn 0.3s ease-out";
+    }, 200);
+}
+
+window.onclick = e => { 
+    if(e.target===modal) {
+        modal.style.animation = "fadeIn 0.3s reverse";
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.style.animation = "fadeIn 0.3s ease-out";
+        }, 200);
+    }
+}
+
+// Search Button
+document.getElementById('searchBtn').addEventListener('click', ()=> {
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    if (!checkin || !checkout || new Date(checkout) <= new Date(checkin)) {
+        // Error animation
+        const inputs = document.querySelectorAll('#checkin, #checkout');
+        inputs.forEach(input => {
+            input.style.borderColor = '#dc3545';
+            input.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                input.style.animation = '';
+            }, 500);
+        });
+        
+        setTimeout(() => {
+            inputs.forEach(input => {
+                input.style.borderColor = '';
+            });
+        }, 2000);
+        
+        alert("Please select valid check-in and check-out dates.");
+        return;
+    }
+    
+    spinner.style.display='block';
+    results.style.opacity = 0;
+    
+    // Simulate API call
+    setTimeout(()=> {
+        spinner.style.display='none';
+        results.style.opacity = 1;
+        renderHotels();
+        
+        // Add success animation
+        results.style.animation = 'none';
+        setTimeout(() => {
+            results.style.animation = 'slideUp 0.6s ease-out';
+        }, 10);
+    }, 1500);
+});
+
+// Filters & Sorting
+breakfastFilter.addEventListener('change', () => {
+    renderHotels();
+    // Add filter animation
+    results.style.animation = 'none';
+    setTimeout(() => {
+        results.style.animation = 'slideUp 0.4s ease-out';
+    }, 10);
+});
+
+sortBy.addEventListener('change', () => {
+    renderHotels();
+    // Add sort animation
+    results.style.animation = 'none';
+    setTimeout(() => {
+        results.style.animation = 'slideUp 0.4s ease-out';
+    }, 10);
+});
+
+// Add shake animation for errors
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+`;
+document.head.appendChild(style);
+
+// Initial render with delay
+setTimeout(() => {
+    renderHotels();
+}, 300);
+</script>
+
+</body>
+</html>
